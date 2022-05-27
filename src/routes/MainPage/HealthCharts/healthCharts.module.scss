@@ -1,6 +1,35 @@
 @use '/src/styles/mixins/flexbox';
+@use '/src/styles/constants/colors';
 
 .container {
-  @include flexbox.flexbox(center, center);
-  height: 100vh;
+  position: relative;
+  height: 100%;
+  margin-top: 30px;
+
+  h2 {
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  .detail {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: colors.$SUB_TEXT_COLOR;
+    border: 1px solid colors.$BORDER_COLOR;
+    border-radius: 20px;
+  }
+
+  .compare {
+    margin-top: 20px;
+    font-size: 18px;
+    line-height: 22px;
+
+    mark {
+      color: colors.$MARK_COLOR;
+      background: linear-gradient(colors.$WHITE 50%, colors.$MAIN_COLOR 50%);
+    }
+  }
 }
