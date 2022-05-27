@@ -1,7 +1,11 @@
 import styles from './healthManage.module.scss'
 
 const HealthManage = () => {
-  return <div className={styles.container}>HealthManage</div>
+  return (
+    <section className={styles.container}>
+      <h2>HealthManage</h2>
+    </section>
+  )
 }
 
 export default HealthManage

@@ -6,13 +6,16 @@ import MainPage from './MainPage'
 
 const App = () => {
   return (
-    <main className={styles.app}>
-      <Routes>
-        <Route path='/' element={<MainPage />} />
-        <Route path='login' element={<LoginPage />} />
-        <Route path='*' element={<div>404</div>} />
-      </Routes>
-    </main>
+    <div className={styles.container}>
+      <header>header</header>
+      <main className={styles.app}>
+        <Routes>
+          <Route path='/' element={<MainPage />} />
+          <Route path='login' element={<LoginPage />} />
+          <Route path='*' element={<div>404</div>} />
+        </Routes>
+      </main>
+    </div>
   )
 }
 

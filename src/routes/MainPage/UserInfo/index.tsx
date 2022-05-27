@@ -1,7 +1,11 @@
 import styles from './userInfo.module.scss'
 
 const UserInfo = () => {
-  return <div className={styles.container}>UserInfo</div>
+  return (
+    <section className={styles.container}>
+      <h2>UserInfo</h2>
+    </section>
+  )
 }
 
 export default UserInfo

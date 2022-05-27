@@ -1,5 +1,6 @@
+@use '/src/styles/mixins/flexbox';
+
 .container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flexbox.flexbox(center, center);
+  height: 100vh;
 }
