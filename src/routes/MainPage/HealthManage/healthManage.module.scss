@@ -1,6 +1,121 @@
 @use '/src/styles/mixins/flexbox';
+@use '/src/styles/constants/colors';
 
 .container {
-  @include flexbox.flexbox(center, center);
-  height: 100vh;
+  margin-top: 20px;
+  color: colors.$MAIN_TEXT_COLOR;
+
+  .title {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  .subText {
+    font-weight: 300;
+    line-height: 20px;
+
+    span {
+      font-weight: 400;
+    }
+  }
+
+  .healthCard {
+    position: relative;
+    flex-direction: column;
+    padding: 50px 20px 30px;
+    margin-top: 20px;
+    border: 1px solid colors.$BORDER_COLOR;
+    border-radius: 20px;
+    @include flexbox.flexbox(center, start);
+    box-shadow: 0 1px 4px rgba(colors.$BLACK, 0.1);
+
+    .icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .info {
+      width: 100%;
+      padding-bottom: 40px;
+      margin-bottom: 40px;
+      border-bottom: 2px solid colors.$BORDER_COLOR;
+
+      h3 {
+        margin-bottom: 15px;
+        font-size: 22px;
+        font-style: italic;
+        font-weight: 500;
+      }
+
+      .healthTitle {
+        margin-bottom: 20px;
+        font-size: 22px;
+        font-weight: 500;
+        color: colors.$GREEN_COLOR;
+      }
+
+      .detail {
+        margin-bottom: 15px;
+        font-size: 14px;
+        line-height: 20px;
+
+        span {
+          font-weight: 500;
+        }
+      }
+
+      .normal {
+        margin-bottom: 15px;
+        font-size: 13px;
+        color: colors.$SUB_TEXT_COLOR;
+        letter-spacing: 0.2px;
+      }
+
+      .tag {
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 13px;
+
+        li {
+          padding: 7px 15px;
+          color: colors.$SUB_TEXT_COLOR;
+          background: colors.$SUB_TAG;
+          border-radius: 50px;
+
+          + li {
+            margin-left: 10px;
+          }
+
+          &:first-child {
+            background: colors.$MAIN_TAG;
+          }
+        }
+      }
+    }
+
+    .manage {
+      h4 {
+        margin-bottom: 15px;
+        font-weight: 500;
+        color: colors.$GREEN_COLOR;
+      }
+
+      ul {
+        padding-left: 20px;
+
+        li {
+          font-size: 14px;
+          font-weight: 300;
+          line-height: 17px;
+          list-style: disc;
+
+          + li {
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+  }
 }
