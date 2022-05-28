@@ -1,16 +1,13 @@
 import { VictoryAxis, VictoryBar, VictoryChart, VictoryLine, VictoryScatter } from 'victory'
 import { CallbackArgs } from 'victory-core'
+import { setChartColor } from '../AverageChart'
 
-import styles from './averageChart.module.scss'
+import styles from './costForecastChart.module.scss'
 
-export const setChartColor = (datum: any, myColor: string, compareColor: string) => {
-  return datum.x === '나' ? myColor : compareColor
-}
-
-const AverageChart = () => {
-  const comparePeerAverage = [
-    { x: '나', HealthScore: 875 },
-    { x: '30대 남성', HealthScore: 866 },
+const CostForecastChart = () => {
+  const compareMediExpenseDecade = [
+    { x: '나', mediExpense: 93335 },
+    { x: '10년 후', mediExpense: 129455 },
   ]
 
   return (
@@ -18,11 +15,11 @@ const AverageChart = () => {
       <VictoryChart height={300}>
         <VictoryAxis style={{ axis: { stroke: 'white' }, tickLabels: { fontSize: 20 } }} />
         <VictoryBar
+          data={compareMediExpenseDecade}
           barWidth={60}
-          data={comparePeerAverage}
-          labels={({ datum }) => `${datum.HealthScore}점`}
           x='x'
-          y='HealthScore'
+          y='mediExpense'
+          labels={({ datum }) => datum.mediExpense}
           style={{
             data: {
               fill: ({ datum }: CallbackArgs) => setChartColor(datum, '#ffd300', '#fe612c'),
@@ -33,11 +30,11 @@ const AverageChart = () => {
             },
           }}
         />
-        <VictoryLine data={comparePeerAverage} x='x' y='HealthScore' />
+        <VictoryLine data={compareMediExpenseDecade} x='x' y='mediExpense' />
         <VictoryScatter
-          data={comparePeerAverage}
+          data={compareMediExpenseDecade}
           x='x'
-          y='HealthScore'
+          y='mediExpense'
           style={{
             data: {
               fill: ({ datum }: CallbackArgs) => setChartColor(datum, 'grey', 'white'),
@@ -52,4 +49,4 @@ const AverageChart = () => {
   )
 }
 
-export default AverageChart
+export default CostForecastChart

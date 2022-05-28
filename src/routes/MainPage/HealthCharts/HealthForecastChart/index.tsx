@@ -1,16 +1,13 @@
 import { VictoryAxis, VictoryBar, VictoryChart, VictoryLine, VictoryScatter } from 'victory'
 import { CallbackArgs } from 'victory-core'
+import { setChartColor } from '../AverageChart'
 
-import styles from './averageChart.module.scss'
+import styles from './healthForecastChart.module.scss'
 
-export const setChartColor = (datum: any, myColor: string, compareColor: string) => {
-  return datum.x === '나' ? myColor : compareColor
-}
-
-const AverageChart = () => {
-  const comparePeerAverage = [
+const HealthForecastChart = () => {
+  const compareScoreDecade = [
     { x: '나', HealthScore: 875 },
-    { x: '30대 남성', HealthScore: 866 },
+    { x: '10년 후', HealthScore: 790 },
   ]
 
   return (
@@ -18,11 +15,11 @@ const AverageChart = () => {
       <VictoryChart height={300}>
         <VictoryAxis style={{ axis: { stroke: 'white' }, tickLabels: { fontSize: 20 } }} />
         <VictoryBar
+          data={compareScoreDecade}
           barWidth={60}
-          data={comparePeerAverage}
-          labels={({ datum }) => `${datum.HealthScore}점`}
           x='x'
           y='HealthScore'
+          labels={({ datum }) => `${datum.HealthScore}점`}
           style={{
             data: {
               fill: ({ datum }: CallbackArgs) => setChartColor(datum, '#ffd300', '#fe612c'),
@@ -33,9 +30,9 @@ const AverageChart = () => {
             },
           }}
         />
-        <VictoryLine data={comparePeerAverage} x='x' y='HealthScore' />
+        <VictoryLine data={compareScoreDecade} x='x' y='HealthScore' />
         <VictoryScatter
-          data={comparePeerAverage}
+          data={compareScoreDecade}
           x='x'
           y='HealthScore'
           style={{
@@ -52,4 +49,4 @@ const AverageChart = () => {
   )
 }
 
-export default AverageChart
+export default HealthForecastChart

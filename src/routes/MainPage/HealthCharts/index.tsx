@@ -1,7 +1,8 @@
 import styles from './healthCharts.module.scss'
 import YearsChart from './YearsChart'
 import AverageChart from './AverageChart'
-import ForecastChart from './ForecastChart'
+import HealthForecastChart from './HealthForecastChart'
+import CostForecastChart from './CostForecastChart'
 
 const HealthCharts = () => {
   return (
@@ -31,7 +32,12 @@ const HealthCharts = () => {
           <br />
           현재보다 <mark>85점 낮아요</mark>
         </p>
-        <ForecastChart />
+        <HealthForecastChart />
+        <p className={styles.compare}>
+          10년 후 예상 의료비는 <br />
+          현재보다 <mark>36,120원 낮아요</mark>
+        </p>
+        <CostForecastChart />
       </section>
     </>
   )
