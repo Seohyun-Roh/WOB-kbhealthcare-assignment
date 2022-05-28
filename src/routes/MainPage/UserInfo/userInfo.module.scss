@@ -27,6 +27,11 @@
       width: 300px;
       margin-top: 20px;
 
+      .healthScoreChartContainer {
+        width: 250px;
+        height: 250px;
+      }
+
       p {
         margin-bottom: 10px;
         font-size: 15px;
@@ -38,8 +43,28 @@
         }
       }
 
+      .scoreBox {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 20px;
+
+        .score {
+          font-size: 46px;
+          font-weight: 800;
+        }
+
+        .scoreName {
+          margin-top: 25px;
+          margin-left: 5px;
+          font-size: 18px;
+          color: colors.$SUB_TEXT_COLOR;
+        }
+      }
+
       .date {
-        margin-top: 10px;
+        position: absolute;
+        margin-top: 190px;
         font-size: 14px;
         color: colors.$SUB_TEXT_COLOR;
         opacity: 0.7;
