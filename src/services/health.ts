@@ -73,7 +73,7 @@ export const fetchAverageInfo = () => {
   let percent = `${calculatedPercent}%`
 
   if (calculatedPercent <= 49) percent = `하위 ${calculatedPercent}%`
-  else if (calculatedPercent >= 50) percent = '상위 ${calculatedPercent}%'
+  else if (calculatedPercent >= 50) percent = `상위 ${calculatedPercent}%`
   else percent = 'Error'
 
   const result = calculation(USER_SCORE, data.wxcResultMap.hscore_peer)
