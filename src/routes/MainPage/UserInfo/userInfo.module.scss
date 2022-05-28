@@ -1,6 +1,83 @@
 @use '/src/styles/mixins/flexbox';
+@use '/src/styles/constants/colors';
 
 .container {
-  @include flexbox.flexbox(center, center);
-  height: 100vh;
+  height: 100%;
+
+  h2 {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 500;
+
+    .healthInfoIcon {
+      width: 25px;
+      height: 25px;
+      margin: 1px 0 0 5px;
+    }
+  }
+
+  .healthScoreWrapper {
+    @include flexbox.flexbox(center, center);
+    flex-direction: column;
+
+    .healthScoreContainer {
+      @include flexbox.flexbox(center, center);
+      flex-direction: column;
+      width: 300px;
+      margin-top: 20px;
+
+      p {
+        margin-bottom: 10px;
+        font-size: 15px;
+        color: colors.$SUB_TEXT_COLOR;
+
+        .healthInfoArrowIcon {
+          width: 15px;
+          height: 15px;
+        }
+      }
+
+      .date {
+        margin-top: 10px;
+        font-size: 14px;
+        color: colors.$SUB_TEXT_COLOR;
+        opacity: 0.7;
+      }
+    }
+
+    .infoBox {
+      @include flexbox.flexbox(between, center);
+      width: 330px;
+      height: 70px;
+      padding: 20px;
+      margin-top: 20px;
+      background-color: colors.$SUB_YELLOW;
+      border-radius: 20px;
+
+      span {
+        color: colors.$SUB_TEXT_COLOR;
+      }
+
+      dl {
+        display: flex;
+
+        dt {
+          display: none;
+        }
+
+        dd::after {
+          padding: 0 5px;
+          font-size: 18px;
+          color: colors.$GRAYD;
+          content: '|';
+        }
+
+        dd:last-child::after {
+          padding: 0;
+          content: '';
+        }
+      }
+    }
+  }
 }
