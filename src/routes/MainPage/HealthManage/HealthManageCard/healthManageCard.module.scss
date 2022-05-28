@@ -41,8 +41,9 @@
       font-size: 14px;
       line-height: 20px;
 
-      span {
-        font-weight: 500;
+      mark {
+        font-weight: 800;
+        background-color: #ffffff;
       }
     }
 
@@ -59,7 +60,7 @@
       font-size: 13px;
 
       li {
-        padding: 7px 15px;
+        padding: 7px 10px;
         color: colors.$SUB_TEXT_COLOR;
         background: colors.$SUB_TAG;
         border-radius: 50px;

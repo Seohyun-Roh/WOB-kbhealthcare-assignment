@@ -251,6 +251,12 @@
       "tag3": "흡연관리"
     },
     {
+      "tagId": "resTotalCholesterol",
+      "tag1": "유산소운동",
+      "tag2": "체중감량",
+      "tag3": "흡연관리"
+    },
+    {
       "tagId": "resUrinaryProtein",
       "tag1": "의사상담",
       "tag2": "",
