@@ -3,6 +3,10 @@ import { CallbackArgs } from 'victory-core'
 
 import styles from './averageChart.module.scss'
 
+export const setChartColor = (datum: any, myColor: string, compareColor: string) => {
+  return datum.x === '나' ? myColor : compareColor
+}
+
 const AverageChart = () => {
   const comparePeerAverage = [
     { x: '나', HealthScore: 875 },
@@ -21,10 +25,10 @@ const AverageChart = () => {
           y='HealthScore'
           style={{
             data: {
-              fill: ({ datum }) => (datum.x === '나' ? '#ffd300' : '#fe612c'),
+              fill: ({ datum }: CallbackArgs) => setChartColor(datum, '#ffd300', '#fe612c'),
             },
             labels: {
-              fill: ({ datum }: CallbackArgs) => (datum.x === '나' ? '#fe612c' : 'black'),
+              fill: ({ datum }: CallbackArgs) => setChartColor(datum, '#fe612c', 'black'),
               fontSize: 20,
             },
           }}
@@ -36,8 +40,8 @@ const AverageChart = () => {
           y='HealthScore'
           style={{
             data: {
-              fill: ({ datum }) => (datum.x === '나' ? 'grey' : 'white'),
-              stroke: ({ datum }) => (datum.x === '나' ? 'none' : 'black'),
+              fill: ({ datum }: CallbackArgs) => setChartColor(datum, 'grey', 'white'),
+              stroke: ({ datum }: CallbackArgs) => setChartColor(datum, 'none', 'black'),
               strokeWidth: 1,
             },
           }}

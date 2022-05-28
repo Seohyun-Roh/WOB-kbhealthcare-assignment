@@ -1,5 +1,6 @@
 import { VictoryAxis, VictoryBar, VictoryChart, VictoryLine, VictoryScatter } from 'victory'
 import { CallbackArgs } from 'victory-core'
+import { setChartColor } from '../AverageChart'
 
 import styles from './healthForecastChart.module.scss'
 
@@ -21,10 +22,10 @@ const HealthForecastChart = () => {
           labels={({ datum }) => `${datum.HealthScore}점`}
           style={{
             data: {
-              fill: ({ datum }) => (datum.x === '나' ? '#ffd300' : '#fe612c'),
+              fill: ({ datum }: CallbackArgs) => setChartColor(datum, '#ffd300', '#fe612c'),
             },
             labels: {
-              fill: ({ datum }: CallbackArgs) => (datum.x === '나' ? '#fe612c' : 'black'),
+              fill: ({ datum }: CallbackArgs) => setChartColor(datum, '#fe612c', 'black'),
               fontSize: 20,
             },
           }}
@@ -36,8 +37,8 @@ const HealthForecastChart = () => {
           y='HealthScore'
           style={{
             data: {
-              fill: ({ datum }) => (datum.x === '나' ? 'grey' : 'white'),
-              stroke: ({ datum }) => (datum.x === '나' ? 'none' : 'black'),
+              fill: ({ datum }: CallbackArgs) => setChartColor(datum, 'grey', 'white'),
+              stroke: ({ datum }: CallbackArgs) => setChartColor(datum, 'none', 'black'),
               strokeWidth: 1,
             },
           }}
