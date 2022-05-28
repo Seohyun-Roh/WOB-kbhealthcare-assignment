@@ -1,2 +1,3 @@
-// 계산 관련 커스텀 함수
-export {}
+export const calculation = (a: string | number, b: string | number) => {
+  return Number(a) - Number(b)
+}

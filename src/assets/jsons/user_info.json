@@ -1,5 +1,7 @@
 {
   "userInfo": {
+    "userId": "kimhealth",
+    "name": "김헬스",
     "healthScript": "Y",
     "healthScore": "875",
     "healthDate": "20210820"
