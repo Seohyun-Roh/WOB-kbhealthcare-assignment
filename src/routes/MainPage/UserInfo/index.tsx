@@ -1,13 +1,17 @@
+import store from 'storejs'
+
 import styles from './userInfo.module.scss'
 import HealthScore from './HealthScore'
 
 import { HealthInfo } from 'assets/svgs'
 
 const UserInfo = () => {
+  const userName = store.get('userName')
+
   return (
     <section className={styles.container}>
       <h2>
-        <span>김헬스님의 건강점수</span>
+        <span>{`${userName}님의 건강점수`}</span>
         <HealthInfo className={styles.healthInfoIcon} />
       </h2>
       <div className={styles.healthScoreWrapper}>
