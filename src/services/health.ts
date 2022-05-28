@@ -56,6 +56,7 @@ export const fetchYearsChartInfo = () => {
 
   value.forEach((score, i) => {
     const obj: YearsType = {}
+
     obj.x = year[i]
     obj.value = Number(score)
     scoreAndYears.push(obj)
