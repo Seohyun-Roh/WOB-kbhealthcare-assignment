@@ -15,7 +15,7 @@ const removeStringifiedArray = (array: string) => {
 }
 
 export const fetchUserIdInfo = () => {
-  return data.userInfo.userId
+  return { id: data.userInfo.userId, name: data.userInfo.name }
 }
 
 export const fetchPersonalHealthInfo = () => {
@@ -24,16 +24,6 @@ export const fetchPersonalHealthInfo = () => {
   if (data.wxcResultMap.paramMap.sex === '1') gender = '남자'
   else if (data.wxcResultMap.paramMap.sex !== '1') gender = '여자'
   else gender = 'Error'
-
-  console.log('1번', [
-    {
-      name: data.userInfo.name,
-      healthScore: Number(data.userInfo.healthScore),
-      userGender: gender,
-      age: Number(data.wxcResultMap.paramMap.age),
-      height: Number(data.wxcResultMap.paramMap.resHeight),
-    },
-  ])
 
   return [
     {
@@ -65,15 +55,10 @@ export const fetchYearsChartInfo = () => {
   const scoreAndYears: YearsType[] = []
 
   value.forEach((score, i) => {
-    let obj: YearsType = {}
+    const obj: YearsType = {}
+    obj.x = year[i]
     obj.value = Number(score)
-    obj.year = year[i]
     scoreAndYears.push(obj)
-  })
-
-  console.log('2번', {
-    comparison: minusOrPlus,
-    yearsInfo: scoreAndYears,
   })
 
   return {
@@ -100,25 +85,12 @@ export const fetchAverageInfo = () => {
   else if (result === 0) comparision = '평균과 같아요'
   else comparision = 'Error'
 
-  console.log('3번', {
-    percent,
-    comparision,
-    score: [
-      {
-        myScore: Number(USER_SCORE),
-        averageScore: Number(data.wxcResultMap.hscore_peer),
-      },
-    ],
-  })
-
   return {
     percent,
     comparision,
     score: [
-      {
-        myScore: Number(USER_SCORE),
-        averageScore: Number(data.wxcResultMap.hscore_peer),
-      },
+      { x: '나', value: Number(USER_SCORE) },
+      { x: '30대 남성', value: Number(data.wxcResultMap.hscore_peer) },
     ],
   }
 }
@@ -140,10 +112,8 @@ const healthForecast = () => {
   return {
     comparison,
     score: [
-      {
-        myScore: Number(USER_SCORE),
-        forecastValue,
-      },
+      { x: '나', value: Number(USER_SCORE) },
+      { x: '10년 후', value: forecastValue },
     ],
   }
 }
@@ -171,19 +141,13 @@ const expenseForecast = () => {
   return {
     comparison,
     score: [
-      {
-        myScore: expense,
-        forecastValue: formatValue,
-      },
+      { x: '나', value: expense },
+      { x: '10년 후', value: formatValue },
     ],
   }
 }
 
 export const fetchForecastInfo = () => {
-  console.log('4번', {
-    health: healthForecast(),
-    expense: expenseForecast(),
-  })
   return { health: healthForecast(), expense: expenseForecast() }
 }
 

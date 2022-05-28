@@ -1,4 +1,4 @@
 export interface YearsType {
   value?: number
-  year?: string
+  x?: string
 }
