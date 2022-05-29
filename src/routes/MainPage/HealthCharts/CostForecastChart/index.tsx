@@ -1,3 +1,4 @@
+import { fetchForecastInfo } from 'services/health'
 import { VictoryAxis, VictoryBar, VictoryChart, VictoryLine, VictoryScatter } from 'victory'
 import { CallbackArgs } from 'victory-core'
 import { setChartColor } from '../AverageChart'
@@ -5,36 +6,33 @@ import { setChartColor } from '../AverageChart'
 import styles from './costForecastChart.module.scss'
 
 const CostForecastChart = () => {
-  const compareMediExpenseDecade = [
-    { x: '나', mediExpense: 93335 },
-    { x: '10년 후', mediExpense: 129455 },
-  ]
+  const { score } = fetchForecastInfo().expense
 
   return (
     <div className={styles.container}>
       <VictoryChart height={300}>
-        <VictoryAxis style={{ axis: { stroke: 'white' }, tickLabels: { fontSize: 20 } }} />
+        <VictoryAxis style={{ axis: { stroke: 'white' }, tickLabels: { fontSize: 25 } }} />
         <VictoryBar
-          data={compareMediExpenseDecade}
+          data={score}
           barWidth={60}
           x='x'
-          y='mediExpense'
-          labels={({ datum }) => datum.mediExpense}
+          y='value'
+          labels={({ datum }) => datum.value}
           style={{
             data: {
               fill: ({ datum }: CallbackArgs) => setChartColor(datum, '#ffd300', '#fe612c'),
             },
             labels: {
               fill: ({ datum }: CallbackArgs) => setChartColor(datum, '#fe612c', 'black'),
-              fontSize: 20,
+              fontSize: 25,
             },
           }}
         />
-        <VictoryLine data={compareMediExpenseDecade} x='x' y='mediExpense' />
+        <VictoryLine data={score} x='x' y='value' />
         <VictoryScatter
-          data={compareMediExpenseDecade}
+          data={score}
           x='x'
-          y='mediExpense'
+          y='value'
           style={{
             data: {
               fill: ({ datum }: CallbackArgs) => setChartColor(datum, 'grey', 'white'),
@@ -42,7 +40,7 @@ const CostForecastChart = () => {
               strokeWidth: 1,
             },
           }}
-          size={5}
+          size={6}
         />
       </VictoryChart>
     </div>
