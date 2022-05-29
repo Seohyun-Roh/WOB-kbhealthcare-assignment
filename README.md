@@ -20,7 +20,7 @@ Typescript": `"^4.4.2"` <br/>
 React-router-dom: `"6"` <br/>
 Sass: `^1.51.0"` <br/>
 Sass-loader: `^12.6.0"` <br/>
-Storejs: `"^2.0.1"` <br/>
+Classnames: `"^2.3.1"` <br/>
 Victory: `"^36.4.0"` <br/>
 Victory-core: `"^36.4.0"` <br/>
 
@@ -36,7 +36,34 @@ Eslint-config-prettier: `"^8.5.0"` <br/>
 <img width="800" alt="KB 개발 과정" src="https://user-images.githubusercontent.com/87627359/170858904-0af7a903-5612-4cc3-875a-d9183081a8b2.png">
 
 ## 폴더 구조
-
+```
+├─assets
+│  ├─images
+│  ├─jsons
+│  └─svgs
+│      ├─healthInfo
+│      └─healthManage
+├─hooks
+│  └─worker
+├─layouts
+├─routes
+│  ├─LoginPage
+│  ├─MainPage
+│  │  ├─HealthCharts
+│  │  ├─HealthManage
+│  │  │  └─HealthManageCard
+│  │  ├─UserInfo
+│  │  └─components
+│  │      └─Chart
+│  └─NotFoundPage
+├─services
+├─styles
+│  ├─base
+│  ├─constants
+│  └─mixins
+├─types
+└─utils
+```
 
 ## 기능
 ### 로그인
@@ -53,12 +80,23 @@ Eslint-config-prettier: `"^8.5.0"` <br/>
 - 건강 점수 계산일, 사용자의 기본 정보 또한 확인할 수 있습니다.
 
 ### 건강 점수 분석 결과
+<img width="379" alt="image" src="https://user-images.githubusercontent.com/87627359/170882644-83f1a048-0583-438a-bef1-32dfd34cec2c.png">
+
+- 각 년도의 건강 점수를 비교해, 현재 건강 점수와 가장 최근 년도의 건강 점수 차이를 한눈에 파악할 수 있습니다.
+- 자신과 비슷한 나이의 비교군과 자신의 건강 점수를 대조해 현재 건강 상태를 알려줍니다.
+
+### 10년 후 건강 예측
+
+<img width="393" alt="image" src="https://user-images.githubusercontent.com/87627359/170882692-0c483460-19b8-4ab7-b0e0-e762253f9110.png">
+
+- 10년 후 자신의 건강 점수와 의료비를 예측해주는 컴포넌트 입니다.
 
 ### 맞춤 건강 관리
+![건강카드](https://user-images.githubusercontent.com/87627359/170882311-d85b6b3e-3e4c-46d0-a9cd-602f8feab3da.gif)
 
 - 사용자에게 맞춤 건강관리 서비스를 제공하는 컴포넌트입니다.
-- 항복은 총 8개입니다.
-- 복잡한 JSON 데이터를 어떻게 효율적으로 가공하여 사용할지에 대한 고민이 있었습니다.
+- 현재의 건강상태와, 정상 수치를 비교해 병을 진단합니다. 정상 수치에서 벗어나는 경우, 사용자의 수치에 맞는 질병 관리 방법을 알려줍니다.
+- 관리 태그들을 나열해 사용자가 한 눈에 어떤 관리가 필요한지 알아 볼 수 있습니다.
 
 
 ## 느낀 점
