@@ -9,6 +9,11 @@ body {
   background: colors.$BG_COLOR;
 }
 
+h1 {
+  font-weight: 600;
+  color: colors.$MAIN_TEXT_COLOR;
+}
+
 .container {
   width: 375px;
   height: 720px;

@@ -8,7 +8,9 @@ import PrivateRoute from 'layouts/PrivateRoute'
 const App = () => {
   return (
     <div className={styles.container}>
-      <header>header</header>
+      <header>
+        <h1>마이헬스</h1>
+      </header>
       <main className={styles.app}>
         <Routes>
           <Route element={<PrivateRoute />}>

@@ -14,8 +14,8 @@ export const login = async (userInputId: string) => {
 }
 
 const VALIDATION_ERRORS = {
-  emptyInput: '이 입력란을 작성해주세요',
-  wrongInput: 'ID는 kimhealth로 입력하세요',
+  emptyInput: '아이디를 입력해주세요.',
+  wrongInput: '입력한 정보를 확인해주세요.',
 }
 
 export const validateUserInputId = (userInputId: string) => {
