@@ -4,9 +4,11 @@ import styles from './userInfo.module.scss'
 import HealthScore from './HealthScore'
 
 import { HealthInfo } from 'assets/svgs'
+import { fetchPersonalHealthInfo } from 'services/health'
 
 const UserInfo = () => {
   const userName = store.get('userName')
+  const getUserData = fetchPersonalHealthInfo()
 
   return (
     <section className={styles.container}>
@@ -15,16 +17,16 @@ const UserInfo = () => {
         <HealthInfo className={styles.healthInfoIcon} />
       </h2>
       <div className={styles.healthScoreWrapper}>
-        <HealthScore />
+        <HealthScore healthScore={getUserData.healthScore} />
         <div className={styles.infoBox}>
           <span>기본 정보</span>
           <dl>
             <dt>성별</dt>
-            <dd>남성</dd>
+            <dd>{getUserData.userGender}</dd>
             <dt>나이</dt>
-            <dd>36세</dd>
+            <dd>{getUserData.age}세</dd>
             <dt>키</dt>
-            <dd>176.8cm</dd>
+            <dd>{getUserData.height}cm</dd>
           </dl>
         </div>
       </div>

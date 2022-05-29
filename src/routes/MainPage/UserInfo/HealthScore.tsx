@@ -2,8 +2,8 @@ import styles from './userInfo.module.scss'
 import { HealthInfoArrow } from 'assets/svgs'
 import { VictoryPie } from 'victory'
 
-const HealthScore = () => {
-  const percent = (875 / 1000) * 100
+const HealthScore = ({ healthScore }: { healthScore: number }) => {
+  const percent = (healthScore / 1000) * 100
   const total = 100 - percent
 
   return (
@@ -28,7 +28,7 @@ const HealthScore = () => {
       </div>
 
       <div className={styles.scoreBox}>
-        <h1 className={styles.score}>875</h1>
+        <h1 className={styles.score}>{healthScore}</h1>
         <p className={styles.scoreName}>점</p>
       </div>
       <p className={styles.date}>2021.08.20</p>
