@@ -1,4 +1,4 @@
-import { fetchAverageInfo, fetchForecastInfo, fetchYearsChartInfo } from 'services/health'
+import { fetchAverageInfo, fetchForecastInfo, fetchYearsChartInfo } from 'services/chart'
 import { ScoreType } from 'types/health'
 
 import styles from './healthCharts.module.scss'

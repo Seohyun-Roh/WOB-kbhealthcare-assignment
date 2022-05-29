@@ -4,7 +4,7 @@ import styles from './userInfo.module.scss'
 import HealthScore from './HealthScore'
 
 import { HealthInfo } from 'assets/svgs'
-import { fetchPersonalHealthInfo } from 'services/health'
+import { fetchPersonalHealthInfo } from 'services/user'
 
 const UserInfo = () => {
   const userName = store.get('userName')

@@ -1,6 +1,6 @@
 ﻿import styles from './healthManage.module.scss'
 import HealthManageCard from './HealthManageCard'
-import { getHealthManageData } from 'services/health'
+import { getHealthManageData } from 'services/healthManage'
 
 const HealthManage = () => {
   const { wMymaxHscoreDy, healthManageCardData } = getHealthManageData()
