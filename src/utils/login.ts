@@ -1,4 +1,4 @@
-import { fetchUserIdInfo } from 'services/health'
+import { fetchUserIdInfo } from 'services/user'
 
 export const login = async (userInputId: string) => {
   try {
