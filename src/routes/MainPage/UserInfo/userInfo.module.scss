@@ -2,17 +2,14 @@
 @use '/src/styles/constants/colors';
 
 .container {
-  height: 100%;
-
   h2 {
-    display: flex;
-    align-items: center;
-    font-size: 24px;
+    @include flexbox.flexbox(start, center);
+    font-size: 20px;
     font-weight: 500;
 
     .healthInfoIcon {
-      width: 25px;
-      height: 25px;
+      width: 20px;
+      height: 20px;
       margin: 1px 0 0 5px;
     }
   }
@@ -23,6 +20,7 @@
 
     .healthScoreContainer {
       @include flexbox.flexbox(center, center);
+      position: relative;
       flex-direction: column;
       width: 300px;
       margin-top: 20px;
@@ -32,9 +30,35 @@
         height: 250px;
       }
 
+      .scoreBox {
+        @include flexbox.flexbox(center, end);
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        .score {
+          font-size: 40px;
+          font-weight: 800;
+        }
+
+        > span {
+          margin-top: 25px;
+          margin-left: 3px;
+          font-size: 18px;
+          color: colors.$SUB_TEXT_COLOR;
+        }
+      }
+
+      .date {
+        margin: -15px 0 10px;
+        font-size: 13px;
+        color: colors.$SUB_TEXT_COLOR;
+        opacity: 0.7;
+      }
+
       button {
-        margin-bottom: 10px;
-        font-size: 15px;
+        font-size: 16px;
         color: colors.$SUB_TEXT_COLOR;
 
         .healthInfoArrowIcon {
@@ -43,43 +67,16 @@
           padding-top: 5px;
         }
       }
-
-      .scoreBox {
-        position: absolute;
-        display: flex;
-        flex-direction: row;
-        margin-bottom: 20px;
-
-        .score {
-          font-size: 46px;
-          font-weight: 800;
-        }
-
-        .scoreName {
-          margin-top: 25px;
-          margin-left: 5px;
-          font-size: 18px;
-          color: colors.$SUB_TEXT_COLOR;
-        }
-      }
-
-      .date {
-        position: absolute;
-        margin-top: 190px;
-        font-size: 14px;
-        color: colors.$SUB_TEXT_COLOR;
-        opacity: 0.7;
-      }
     }
 
     .infoBox {
-      @include flexbox.flexbox(between, center);
-      width: 330px;
+      width: 100%;
       height: 70px;
       padding: 20px;
-      margin-top: 20px;
+      margin-top: 30px;
       background-color: colors.$SUB_YELLOW;
       border-radius: 20px;
+      @include flexbox.flexbox(between, center);
 
       span {
         color: colors.$SUB_TEXT_COLOR;
@@ -92,16 +89,23 @@
           display: none;
         }
 
+        dd {
+          position: relative;
+          margin-left: 15px;
+        }
+
         dd::after {
-          padding: 0 5px;
-          font-size: 18px;
-          color: colors.$GRAYD;
-          content: '|';
+          position: absolute;
+          top: 0;
+          right: -9px;
+          width: 1px;
+          height: 100%;
+          content: '';
+          background: colors.$GRAYA;
         }
 
         dd:last-child::after {
-          padding: 0;
-          content: '';
+          display: none;
         }
       }
     }
