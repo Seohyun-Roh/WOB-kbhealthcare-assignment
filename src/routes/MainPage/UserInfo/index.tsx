@@ -15,7 +15,7 @@ const UserInfo = () => {
         <HealthInfo className={styles.healthInfoIcon} />
       </h2>
       <div className={styles.healthScoreWrapper}>
-        <HealthScore healthScore={getUserData.healthScore} />
+        <HealthScore healthScore={getUserData.healthScore} date={getUserData.date} />
         <div className={styles.infoBox}>
           <span>기본 정보</span>
           <dl>
