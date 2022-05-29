@@ -6,10 +6,16 @@ import styles from './loginPage.module.scss'
 import { login, validateUserInputId } from 'utils/login'
 
 const LoginPage = () => {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (sessionStorage.getItem('userName')) {
+      navigate('/')
+    }
+  }, [navigate])
+
   const [userInputId, setUserInputId] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
-
-  const navigate = useNavigate()
 
   const handleUserIdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrorMessage('')

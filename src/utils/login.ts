@@ -1,12 +1,11 @@
 import { fetchUserIdInfo } from 'services/health'
-import store from 'storejs'
 
 export const login = async (userInputId: string) => {
   try {
     const { id, name } = await fetchUserIdInfo()
 
     if (id === userInputId) {
-      store.set('userName', name)
+      sessionStorage.setItem('userName', name)
     }
   } catch {
     throw new Error('아이디가 일치하지 않습니다')
