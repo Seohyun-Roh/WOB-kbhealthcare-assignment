@@ -1,5 +1,3 @@
-import store from 'storejs'
-
 import styles from './userInfo.module.scss'
 import HealthScore from './HealthScore'
 
@@ -7,7 +5,7 @@ import { HealthInfo } from 'assets/svgs'
 import { fetchPersonalHealthInfo } from 'services/user'
 
 const UserInfo = () => {
-  const userName = store.get('userName')
+  const userName = sessionStorage.getItem('userName')
   const getUserData = fetchPersonalHealthInfo()
 
   return (

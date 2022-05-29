@@ -1,12 +1,11 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
-import store from 'storejs'
 
 const PrivateRoute = () => {
   const location = useLocation()
 
-  const isUserName = store.get('userName')
+  const userName = sessionStorage.getItem('userName')
 
-  if (!isUserName) {
+  if (!userName) {
     return <Navigate to='/login' state={{ from: location }} />
   }
 
