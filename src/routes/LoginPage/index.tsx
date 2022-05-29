@@ -1,11 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import store from 'storejs'
-
-import { fetchUserIdInfo } from 'services/health'
 
 import KB_LOGO from '../../assets/images/KB_logo.png'
 import styles from './loginPage.module.scss'
+import { login, validateUserInputId } from 'utils/login'
 
 const LoginPage = () => {
   const [userInputId, setUserInputId] = useState('')
@@ -13,38 +11,34 @@ const LoginPage = () => {
 
   const navigate = useNavigate()
 
-  const login = () => {
-    const { id, name } = fetchUserIdInfo()
-    if (id === userInputId) {
-      store.set('userName', name)
-      navigate('/')
-    }
-  }
-
   const handleUserIdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrorMessage('')
     setUserInputId(e.currentTarget.value)
   }
 
-  const validateUserId = () => {
-    if (userInputId === '') {
-      setErrorMessage('이 입력란을 작성해주세요')
-      return false
-    }
-    if (userInputId !== 'kimhealth') {
-      setErrorMessage('ID는 kimhealth 로 입력하세요')
-      return false
-    }
-    return true
-  }
-
   const handleLoginOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (validateUserId()) login()
+
+    const validationResult = validateUserInputId(userInputId)
+
+    if (validationResult !== true) {
+      setErrorMessage(validationResult)
+      return
+    }
+
+    login(userInputId)
+      .then(() => navigate('/'))
+      .catch((error) => setErrorMessage(error.message))
   }
 
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    inputRef?.current?.focus()
+  }, [])
+
   return (
-    <div className={styles.loginContainer}>
+   <div className={styles.loginContainer}>
       <section className={styles.container}>
         <h2 className={styles.logo}>
           <img src={KB_LOGO} alt='KB_logo' />
@@ -60,6 +54,7 @@ const LoginPage = () => {
             placeholder='ID를 입력해주세요'
             onChange={handleUserIdInput}
             value={userInputId}
+            ref={inputRef}
           />
           {errorMessage && <span className={styles.errorMessage}>{errorMessage}</span>}
           <button className={styles.loginButton} type='submit'>
