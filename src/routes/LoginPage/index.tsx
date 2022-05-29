@@ -27,9 +27,7 @@ const LoginPage = () => {
     }
 
     login(userInputId)
-      .then(() => {
-        navigate('/')
-      })
+      .then(() => navigate('/'))
       .catch((error) => setErrorMessage(error.message))
   }
 
