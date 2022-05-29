@@ -40,33 +40,33 @@ const LoginPage = () => {
 
   const handleLoginOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (validateUserId() !== false) {
-      login()
-    }
+    if (validateUserId()) login()
   }
 
   return (
-    <div className={styles.container}>
-      <section className={styles.logoContainer}>
-        <img className={styles.logo} src={KB_LOGO} alt='KB_logo' />
+    <div className={styles.loginContainer}>
+      <section className={styles.container}>
+        <h2 className={styles.logo}>
+          <img src={KB_LOGO} alt='KB_logo' />
+        </h2>
+        <form className={styles.loginForm} onSubmit={handleLoginOnSubmit}>
+          <label className={styles.idInputLabel} htmlFor='idInput'>
+            UserID
+          </label>
+          <input
+            className={styles.idInput}
+            id='idInput'
+            type='text'
+            placeholder='ID를 입력해주세요'
+            onChange={handleUserIdInput}
+            value={userInputId}
+          />
+          {errorMessage && <span className={styles.errorMessage}>{errorMessage}</span>}
+          <button className={styles.loginButton} type='submit'>
+            로그인
+          </button>
+        </form>
       </section>
-      <form className={styles.loginForm} onSubmit={handleLoginOnSubmit}>
-        <label className={styles.idInputLabel} htmlFor='idInput'>
-          UserID
-        </label>
-        <input
-          className={styles.idInput}
-          id='idInput'
-          type='text'
-          placeholder='ID를 입력해주세요'
-          onChange={handleUserIdInput}
-          value={userInputId}
-        />
-        {errorMessage && <span className={styles.errorMessage}>{errorMessage}</span>}
-        <button className={styles.loginButton} type='submit'>
-          로그인
-        </button>
-      </form>
     </div>
   )
 }
