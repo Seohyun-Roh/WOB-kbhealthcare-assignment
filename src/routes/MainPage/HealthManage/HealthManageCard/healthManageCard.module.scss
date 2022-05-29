@@ -27,12 +27,12 @@
       margin-bottom: 15px;
       font-size: 22px;
       font-style: italic;
-      font-weight: 500;
+      font-weight: 600;
     }
 
     .healthTitle {
-      margin-bottom: 20px;
-      font-size: 22px;
+      margin-bottom: 15px;
+      font-size: 20px;
       font-weight: 500;
     }
 
@@ -43,7 +43,7 @@
 
       mark {
         font-weight: 800;
-        background-color: #ffffff;
+        background-color: transparent;
       }
     }
 
@@ -75,26 +75,58 @@
       }
     }
   }
-}
 
-.manage {
-  h4 {
-    margin-bottom: 15px;
-    font-weight: 500;
-  }
+  .manage {
+    h4 {
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
 
-  ul {
-    padding-left: 20px;
+    ul {
+      padding-left: 20px;
 
-    li {
-      font-size: 14px;
-      font-weight: 300;
-      line-height: 17px;
-      list-style: disc;
+      li {
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 17px;
+        list-style: disc;
 
-      + li {
-        margin-top: 10px;
+        +li {
+          margin-top: 10px;
+        }
       }
     }
   }
+}
+
+.resBMI {
+  color: colors.$BMI_COLOR;
+}
+
+.resBloodPressure {
+  color: colors.$BLOOD_COLOR;
+}
+
+.resTotalCholesterol {
+  color: colors.$CHOLESTEROL_COLOR;
+}
+
+.smkQty {
+  color: colors.$SMK_COLOR;
+}
+
+.resFastingBloodSuger {
+  color: colors.$BLOOD_SUGER_COLOR;
+}
+
+.drnkQty {
+  color: colors.$DRNK_COLOR;
+}
+
+.resGFR {
+  color: colors.$GFR_COLOR;
+}
+
+.exerciQty {
+  color: colors.$EXERCIQTY_COLOR;
 }
