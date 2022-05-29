@@ -1,5 +1,10 @@
 import data from 'assets/jsons/user_info.json'
-import { getScoreDiffMessage } from 'utils/message'
+import {
+  getScoreDiffGroupAverageMessage,
+  getScoreDiffLastYearMessage,
+  getCostDiffAfterTenYearsMessage,
+  getScoreDiffAfterTenYearsMessage,
+} from 'utils/message'
 import { calculation } from 'utils/math'
 import { YearsType } from 'types/health'
 
@@ -25,15 +30,13 @@ export const fetchPersonalHealthInfo = () => {
   else if (data.wxcResultMap.paramMap.sex !== '1') gender = '여자'
   else gender = 'Error'
 
-  return [
-    {
-      name: data.userInfo.userId,
-      healthScore: Number(data.userInfo.healthScore),
-      userGender: gender,
-      age: Number(data.wxcResultMap.paramMap.age),
-      height: Number(data.wxcResultMap.paramMap.resHeight),
-    },
-  ]
+  return {
+    name: data.userInfo.userId,
+    healthScore: Number(data.userInfo.healthScore),
+    userGender: gender,
+    age: Number(data.wxcResultMap.paramMap.age),
+    height: Number(data.wxcResultMap.paramMap.resHeight),
+  }
 }
 
 export const fetchYearsChartInfo = () => {
@@ -41,18 +44,25 @@ export const fetchYearsChartInfo = () => {
     YEARLY_SCORE[YEARLY_SCORE.length - 1].SCORE,
     YEARLY_SCORE[YEARLY_SCORE.length - 2].SCORE
   )
+  const currentYear = new Date().getFullYear()
+  const scoreLastYear = Number(YEARLY_SCORE.find((d) => currentYear - 1 === Number(d.SUBMIT_DATE.slice(0, 4)))?.SCORE)
 
-  let minusOrPlus = '동일해요'
-
-  if (scoreComparedToPreviousYear < 0) minusOrPlus = `${Math.abs(scoreComparedToPreviousYear)}점 낮아졌어요.`
-  else if (scoreComparedToPreviousYear > 0) minusOrPlus = `${scoreComparedToPreviousYear}점 높아졌어요.`
-  else if (scoreComparedToPreviousYear === 0) minusOrPlus = '동일해요.'
-  else minusOrPlus = 'Error'
+  const message = getScoreDiffLastYearMessage(scoreComparedToPreviousYear)
 
   const value = YEARLY_SCORE.map((score) => score.SCORE)
   const year = YEARLY_SCORE.map((date) => date.SUBMIT_DATE.slice(0, 4))
 
   const scoreAndYears: YearsType[] = []
+
+  if (year.length === 0) {
+    message.startMessage = '연도별 건강점수가 아직 없습니다'
+    message.endMessage = ''
+  }
+
+  if (year.length === 1) {
+    message.startMessage = `${year[0]}년 건강점수는`
+    message.endMessage = `${value[0]}점입니다`
+  }
 
   value.forEach((score, i) => {
     const obj: YearsType = {}
@@ -63,12 +73,17 @@ export const fetchYearsChartInfo = () => {
   })
 
   return {
-    comparison: minusOrPlus,
+    message,
+    diff: scoreComparedToPreviousYear,
     yearsInfo: scoreAndYears,
   }
 }
 
 export const fetchAverageInfo = () => {
+  const { userGender, age } = fetchPersonalHealthInfo()
+  const dividedAge = age - (age % 10)
+  const ageGroup = dividedAge >= 10 ? `${dividedAge}대` : '10대 미만'
+
   const calculatedPercent = Math.round(100 - Number(data.wxcResultMap.hscorePercent))
 
   let percent = `${calculatedPercent}%`
@@ -79,16 +94,12 @@ export const fetchAverageInfo = () => {
 
   const result = calculation(USER_SCORE, data.wxcResultMap.hscore_peer)
 
-  let comparision = `${result}점`
-
-  if (result < 0) comparision = `${Math.abs(result)}점 낮아요.`
-  else if (result > 0) comparision = `${result}점 높아요.`
-  else if (result === 0) comparision = '평균과 같아요'
-  else comparision = 'Error'
+  const message = getScoreDiffGroupAverageMessage(result, ageGroup, userGender)
 
   return {
     percent,
-    comparision,
+    message,
+    diff: result,
     score: [
       { x: '나', value: Number(USER_SCORE) },
       { x: '30대 남성', value: Number(data.wxcResultMap.hscore_peer) },
@@ -96,22 +107,18 @@ export const fetchAverageInfo = () => {
   }
 }
 
-const healthForecast = () => {
+export const healthForecast = () => {
   const removeStringified = removeStringifiedArray(data.wxcResultMap.wHscoreDy)
 
   const forecastValue = removeStringified[removeStringified.length - 1]
 
-  const compareToFuture = calculation(USER_SCORE, forecastValue)
+  const compareToFuture = calculation(forecastValue, USER_SCORE)
 
-  let comparison = `${compareToFuture}점`
-
-  if (compareToFuture < 0) comparison = `${Math.abs(compareToFuture)}점 높아요.`
-  else if (compareToFuture > 0) comparison = `${compareToFuture}점 낮아요.`
-  else if (compareToFuture === 0) comparison = '현재와 같아요'
-  else comparison = 'Error'
+  const message = getScoreDiffAfterTenYearsMessage(compareToFuture)
 
   return {
-    comparison,
+    diff: compareToFuture,
+    message,
     score: [
       { x: '나', value: Number(USER_SCORE) },
       { x: '10년 후', value: forecastValue },
@@ -119,7 +126,7 @@ const healthForecast = () => {
   }
 }
 
-const expenseForecast = () => {
+export const expenseForecast = () => {
   const currentExpenseString = data.wxcResultMap.medi
 
   const forecastArray = removeStringifiedArray(data.wxcResultMap.mediDy)
@@ -128,19 +135,15 @@ const expenseForecast = () => {
 
   const formatValue = forecastValue.toLocaleString()
 
-  const expenseComparedToFuture = calculation(currentExpenseString, forecastValue)
+  const expenseComparedToFuture = calculation(forecastValue, currentExpenseString)
 
-  let comparison = `${expenseComparedToFuture}원`
-
-  if (expenseComparedToFuture < 0) comparison = `${Math.abs(expenseComparedToFuture).toLocaleString()}원 많아요.`
-  else if (expenseComparedToFuture > 0) comparison = `${expenseComparedToFuture.toLocaleString()}원 적어요.`
-  else if (expenseComparedToFuture === 0) comparison = '현재와 같아요'
-  else comparison = 'Error'
+  const message = getCostDiffAfterTenYearsMessage(expenseComparedToFuture)
 
   const expense = Number(currentExpenseString).toLocaleString()
 
   return {
-    comparison,
+    diff: expenseComparedToFuture,
+    message,
     score: [
       { x: '나', value: expense },
       { x: '10년 후', value: formatValue },
@@ -193,70 +196,5 @@ export const getHealthManageData = () => {
   return {
     wMymaxHscoreDy,
     healthMangeCardData,
-  }
-}
-
-export const getScoreDatas = () => {
-  const { wxcResultMap, healthScoreList: yearData } = data
-  const { wHscore, medi, hscore_peer: hscorePeer, wHscoreDy, mediDy, hscorePercent, paramMap } = wxcResultMap
-  const { age, sex: sexCode } = paramMap
-
-  const myScore = Number(wHscore)
-  const currentCost = Number(medi)
-  const groupAverage = Number(hscorePeer)
-  const expectScoreAfterTenYears = Number(JSON.parse(wHscoreDy).pop())
-  const expectCostAfterTenYears = Number(JSON.parse(mediDy).pop())
-  const myScoreGroupPercent = 100 - Number(hscorePercent)
-  const ageGroupNumber = Number(age) - (Number(age) % 10)
-  const ageGroup = ageGroupNumber >= 10 ? `${ageGroupNumber}대` : `10대 미만`
-  const sex = Number(sexCode) === 1 ? '남성' : '여성'
-  const currentYear = new Date().getFullYear()
-  const scoreLastYear = Number(yearData.find((d) => currentYear - 1 === Number(d.SUBMIT_DATE.slice(0, 4)))?.SCORE)
-
-  const diffScoreLastYear = myScore - scoreLastYear
-  const diffScoreGroupAverage = myScore - groupAverage
-  const diffScoreAfterTenYear = expectScoreAfterTenYears - myScore
-  const diffCostAfterTenYear = expectCostAfterTenYears - currentCost
-
-  return {
-    diffScoreLastYear,
-    diffScoreGroupAverage,
-    diffScoreAfterTenYear,
-    diffCostAfterTenYear,
-    yearData,
-    myScoreGroupPercent,
-    ageGroup,
-    sex,
-  }
-}
-
-export const getScoreDiffMessageAll = () => {
-  const {
-    diffScoreLastYear,
-    diffScoreGroupAverage,
-    diffScoreAfterTenYear,
-    diffCostAfterTenYear,
-    yearData,
-    myScoreGroupPercent,
-    ageGroup,
-    sex,
-  } = getScoreDatas()
-
-  let diffScoreLastYearMessage = getScoreDiffMessage('lastYear', diffScoreLastYear)
-  const diffScoreGroupAverageMessage = getScoreDiffMessage('groupAverage', diffScoreGroupAverage, ageGroup, sex)
-  const diffScoreAfterTenYearMessage = getScoreDiffMessage('scoreAfterTenYears', diffScoreAfterTenYear)
-  const diffCostAfterTenYearMessage = getScoreDiffMessage('costAfterTenYears', diffCostAfterTenYear)
-  const myScoreGroupPercentMessage = `상위 ${myScoreGroupPercent}%`
-
-  if (yearData.length === 1)
-    diffScoreLastYearMessage = `${yearData[0].SUBMIT_DATE.slice(0, 4)}년 건강 점수는 ${yearData[0].SCORE}점 입니다`
-  if (yearData.length === 0) diffScoreLastYearMessage = '연도별 건강 점수가 아직 없습니다'
-
-  return {
-    diffScoreLastYearMessage,
-    diffScoreGroupAverageMessage,
-    diffScoreAfterTenYearMessage,
-    diffCostAfterTenYearMessage,
-    myScoreGroupPercentMessage,
   }
 }

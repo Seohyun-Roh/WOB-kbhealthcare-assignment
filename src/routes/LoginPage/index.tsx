@@ -38,7 +38,7 @@ const LoginPage = () => {
   }, [])
 
   return (
-   <div className={styles.loginContainer}>
+    <div className={styles.loginContainer}>
       <section className={styles.container}>
         <h2 className={styles.logo}>
           <img src={KB_LOGO} alt='KB_logo' />
