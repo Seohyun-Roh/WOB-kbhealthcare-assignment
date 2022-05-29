@@ -1,4 +1,6 @@
 import data from 'assets/jsons/user_info.json'
+import { calculation } from 'utils/math'
+import { fetchPersonalHealthInfo } from './user'
 import {
   getScoreDiffGroupAverageMessage,
   getScoreDiffLastYearMessage,
@@ -6,39 +8,12 @@ import {
   getScoreDiffAfterTenYearsMessage,
   getStatusMessage,
 } from 'utils/message'
-import { calculation } from 'utils/math'
-import { ScoreType } from 'types/health'
-
-interface IHealthManageData {
-  [key: string]: string
-}
 
 const YEARLY_SCORE = data.healthScoreList
 const USER_SCORE = data.wxcResultMap.wHscore
 
 const removeStringifiedArray = (array: string) => {
   return JSON.parse(array)
-}
-
-export const fetchUserIdInfo = () => {
-  return { id: data.userInfo.userId, name: data.userInfo.name }
-}
-
-export const fetchPersonalHealthInfo = () => {
-  let gender = '남자'
-
-  if (data.wxcResultMap.paramMap.sex === '1') gender = '남자'
-  else if (data.wxcResultMap.paramMap.sex !== '1') gender = '여자'
-  else gender = 'Error'
-
-  return {
-    name: data.userInfo.userId,
-    healthScore: Number(data.userInfo.healthScore),
-    userGender: gender,
-    age: Number(data.wxcResultMap.paramMap.age),
-    height: Number(data.wxcResultMap.paramMap.resHeight),
-    date: Number(data.userInfo.healthDate),
-  }
 }
 
 export const fetchYearsChartInfo = () => {
@@ -104,7 +79,7 @@ export const fetchAverageInfo = () => {
   }
 }
 
-export const healthForecast = () => {
+const healthForecast = () => {
   const removeStringified = removeStringifiedArray(data.wxcResultMap.wHscoreDy)
 
   const forecastValue = removeStringified[removeStringified.length - 1]
@@ -123,7 +98,7 @@ export const healthForecast = () => {
   }
 }
 
-export const expenseForecast = () => {
+const expenseForecast = () => {
   const currentExpenseString = data.wxcResultMap.medi
 
   const forecastArray = removeStringifiedArray(data.wxcResultMap.mediDy)
@@ -150,48 +125,4 @@ export const expenseForecast = () => {
 
 export const fetchForecastInfo = () => {
   return { health: healthForecast(), expense: expenseForecast() }
-}
-
-export const getHealthManageData = () => {
-  const property = [
-    'resBMI',
-    'resBloodPressure',
-    'resTotalCholesterol',
-    'smkQty',
-    'resFastingBloodSuger',
-    'drnkQty',
-    'resGFR',
-    'exerciQty',
-  ]
-
-  const { healthTagList, userInfo, wxcResultMap } = data
-
-  const userScore = Number(userInfo.healthScore)
-  const wMymaxHscoreDy = JSON.parse(wxcResultMap.wMymaxHscoreDy).filter((val: number) => val > userScore)
-
-  const { boj, paramMap }: { boj: IHealthManageData; paramMap: IHealthManageData } = wxcResultMap
-
-  const healthMangeCardData = property.map((value) => {
-    const tag: string[] = []
-    healthTagList.forEach((currentValue) => {
-      if (currentValue.tagId === value) tag.push(currentValue.tag1, currentValue.tag2, currentValue.tag3)
-    })
-
-    const splitedBoj = boj[value].split(' - ')
-    if (value === 'smkQty') splitedBoj[0] = '비흡연 중입니다.'
-    else if (value === 'drnkQty') splitedBoj[0] = '1주일간 음주를 하지 않고 있습니다.'
-    else if (value === 'exerciQty') splitedBoj[0] = '1주일간 운동을 하지 않고 있습니다.'
-
-    return {
-      title: value,
-      value: paramMap[value],
-      boj: splitedBoj,
-      tag,
-    }
-  })
-
-  return {
-    wMymaxHscoreDy,
-    healthMangeCardData,
-  }
 }
