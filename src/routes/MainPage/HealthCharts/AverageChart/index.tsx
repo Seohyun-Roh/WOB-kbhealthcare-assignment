@@ -1,6 +1,8 @@
 import { VictoryAxis, VictoryBar, VictoryChart, VictoryLine, VictoryScatter } from 'victory'
 import { CallbackArgs } from 'victory-core'
 
+import { fetchAverageInfo } from 'services/health'
+
 import styles from './averageChart.module.scss'
 
 export const setChartColor = (datum: any, myColor: string, compareColor: string) => {
@@ -8,36 +10,33 @@ export const setChartColor = (datum: any, myColor: string, compareColor: string)
 }
 
 const AverageChart = () => {
-  const comparePeerAverage = [
-    { x: '나', HealthScore: 875 },
-    { x: '30대 남성', HealthScore: 866 },
-  ]
+  const { score } = fetchAverageInfo()
 
   return (
     <div className={styles.container}>
       <VictoryChart height={300}>
-        <VictoryAxis style={{ axis: { stroke: 'white' }, tickLabels: { fontSize: 20 } }} />
+        <VictoryAxis style={{ axis: { stroke: 'white' }, tickLabels: { fontSize: 25 } }} />
         <VictoryBar
           barWidth={60}
-          data={comparePeerAverage}
-          labels={({ datum }) => `${datum.HealthScore}점`}
+          data={score}
+          labels={({ datum }) => `${datum.value}점`}
           x='x'
-          y='HealthScore'
+          y='value'
           style={{
             data: {
               fill: ({ datum }: CallbackArgs) => setChartColor(datum, '#ffd300', '#fe612c'),
             },
             labels: {
               fill: ({ datum }: CallbackArgs) => setChartColor(datum, '#fe612c', 'black'),
-              fontSize: 20,
+              fontSize: 25,
             },
           }}
         />
-        <VictoryLine data={comparePeerAverage} x='x' y='HealthScore' />
+        <VictoryLine data={score} x='x' y='value' />
         <VictoryScatter
-          data={comparePeerAverage}
+          data={score}
           x='x'
-          y='HealthScore'
+          y='value'
           style={{
             data: {
               fill: ({ datum }: CallbackArgs) => setChartColor(datum, 'grey', 'white'),
@@ -45,7 +44,7 @@ const AverageChart = () => {
               strokeWidth: 1,
             },
           }}
-          size={5}
+          size={6}
         />
       </VictoryChart>
     </div>
