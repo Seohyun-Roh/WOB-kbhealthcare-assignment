@@ -4,7 +4,6 @@ const CHART_STYLE = {
     y: 'value',
   },
   label: {
-    fontSize: 16,
     fontWeight: 'bold',
   },
 }
