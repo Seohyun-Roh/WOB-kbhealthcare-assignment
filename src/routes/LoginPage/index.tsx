@@ -38,7 +38,7 @@ const LoginPage = () => {
   }, [])
 
   return (
-    <div className={styles.loginContainer}>
+   <div className={styles.loginContainer}>
       <section className={styles.container}>
         <h2 className={styles.logo}>
           <img src={KB_LOGO} alt='KB_logo' />
@@ -61,24 +61,6 @@ const LoginPage = () => {
           </button>
         </form>
       </section>
-      <form className={styles.loginForm} onSubmit={handleLoginOnSubmit}>
-        <label className={styles.idInputLabel} htmlFor='idInput'>
-          UserID
-        </label>
-        <input
-          className={styles.idInput}
-          id='idInput'
-          type='text'
-          placeholder='ID를 입력해주세요'
-          onChange={handleUserIdInput}
-          value={userInputId}
-          ref={inputRef}
-        />
-        {errorMessage && <span className={styles.errorMessage}>{errorMessage}</span>}
-        <button className={styles.loginButton} type='submit'>
-          로그인
-        </button>
-      </form>
     </div>
   )
 }
