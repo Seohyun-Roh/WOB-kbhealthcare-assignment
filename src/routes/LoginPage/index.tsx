@@ -54,6 +54,7 @@ const LoginPage = () => {
             placeholder='ID를 입력해주세요'
             onChange={handleUserIdInput}
             value={userInputId}
+            ref={inputRef}
           />
           {errorMessage && <span className={styles.errorMessage}>{errorMessage}</span>}
           <button className={styles.loginButton} type='submit'>
