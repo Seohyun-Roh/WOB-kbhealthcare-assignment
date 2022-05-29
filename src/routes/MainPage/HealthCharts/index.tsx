@@ -3,12 +3,16 @@ import { ScoreType } from 'types/health'
 
 import styles from './healthCharts.module.scss'
 import ScoreChart from '../_components/Chart'
-
+// TODO: percent 표시
 const HealthCharts = () => {
-  const { yearsInfo } = fetchYearsChartInfo()
-  const { score: averageScore } = fetchAverageInfo()
-  const { score: healthScore } = fetchForecastInfo().health
-  const { score: expenseScore } = fetchForecastInfo().expense
+  const { yearsInfo, message: yearMessage, status: yearStatus } = fetchYearsChartInfo()
+  const { score: averageScore, message: groupMessage, status: groupStatus, percent: groupPercent } = fetchAverageInfo()
+  const { score: healthScore, message: scoreForecastMessage, status: scoreForecastStatus } = fetchForecastInfo().health
+  const {
+    score: expenseScore,
+    message: expenseForecastMessage,
+    status: expenseForecastStatus,
+  } = fetchForecastInfo().expense
 
   // datum은 CallbackArgs 타입 안에 있는 값 중 any 타입
   const setColor = (data: ScoreType[], datum: any, myColor: string, elseColor: string, isYears: boolean) => {
@@ -26,29 +30,29 @@ const HealthCharts = () => {
           검진결과 자세히
         </button>
         <p className={styles.compare}>
-          총점이
-          <br />
-          지난해 보다 <mark>13점 낮아졌어요</mark>
+          {yearMessage.startMessage} <mark className={styles[yearStatus]}>{yearMessage.endMessage}</mark>
         </p>
         <ScoreChart data={yearsInfo} setColor={setColor} isYears />
-        <p className={styles.compare}>
-          10년 후 예상 건강점수는
-          <br />
-          현재보다 <mark>85점 낮아요</mark>
-        </p>
+
+        <div className={styles.textContainer}>
+          <p className={styles.compare}>
+            {groupMessage.startMessage} <mark className={styles[groupStatus]}>{groupMessage.endMessage}</mark>
+          </p>
+          <mark className={styles.percent}>{groupPercent}</mark>
+        </div>
         <ScoreChart data={averageScore} setColor={setColor} isYears={false} />
       </section>
+
       <section className={styles.container}>
         <h2>나의 10년 후 건강 예측</h2>
         <p className={styles.compare}>
-          10년 후 예상 건강점수는
-          <br />
-          현재보다 <mark>85점 낮아요</mark>
+          {scoreForecastMessage.startMessage}{' '}
+          <mark className={styles[scoreForecastStatus]}>{scoreForecastMessage.endMessage}</mark>
         </p>
         <ScoreChart data={healthScore} setColor={setColor} isYears={false} />
         <p className={styles.compare}>
-          10년 후 예상 의료비는 <br />
-          현재보다 <mark>36,120원 낮아요</mark>
+          {expenseForecastMessage.startMessage}{' '}
+          <mark className={styles[expenseForecastStatus]}>{expenseForecastMessage.endMessage}</mark>
         </p>
         <ScoreChart data={expenseScore} setColor={setColor} isYears={false} />
       </section>

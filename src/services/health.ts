@@ -4,6 +4,7 @@ import {
   getScoreDiffLastYearMessage,
   getCostDiffAfterTenYearsMessage,
   getScoreDiffAfterTenYearsMessage,
+  getStatusMessage,
 } from 'utils/message'
 import { calculation } from 'utils/math'
 import { ScoreType } from 'types/health'
@@ -40,41 +41,36 @@ export const fetchPersonalHealthInfo = () => {
 }
 
 export const fetchYearsChartInfo = () => {
-  const scoreComparedToPreviousYear = calculation(
-    YEARLY_SCORE[YEARLY_SCORE.length - 1].SCORE,
-    YEARLY_SCORE[YEARLY_SCORE.length - 2].SCORE
-  )
+  const scoreAndYears = YEARLY_SCORE.map((yearData) => ({
+    value: Number(yearData.SCORE),
+    x: yearData.SUBMIT_DATE.slice(0, 4),
+  }))
+
   const currentYear = new Date().getFullYear()
-  const scoreLastYear = Number(YEARLY_SCORE.find((d) => currentYear - 1 === Number(d.SUBMIT_DATE.slice(0, 4)))?.SCORE)
+  const targetYear = scoreAndYears?.[scoreAndYears.length - 2].x ?? 0
+  const yearMessage = currentYear - 1 === Number(targetYear) ? '지난해' : `${targetYear}년`
 
-  const message = getScoreDiffLastYearMessage(scoreComparedToPreviousYear)
+  let scoreComparedToPreviousYear = 0
+  let message = { startMessage: '', endMessage: '' }
 
-  const value = YEARLY_SCORE.map((score) => score.SCORE)
-  const year = YEARLY_SCORE.map((date) => date.SUBMIT_DATE.slice(0, 4))
-
-  const scoreAndYears: ScoreType[] = []
-
-  if (year.length === 0) {
+  if (scoreAndYears.length > 2) {
+    scoreComparedToPreviousYear = calculation(
+      YEARLY_SCORE[YEARLY_SCORE.length - 1].SCORE,
+      YEARLY_SCORE[YEARLY_SCORE.length - 2].SCORE
+    )
+    message = getScoreDiffLastYearMessage(scoreComparedToPreviousYear, yearMessage)
+  } else if (scoreAndYears.length === 1) {
+    const { x, value } = scoreAndYears[0]
+    message.startMessage = `${x}년 건강점수는`
+    message.endMessage = `${value}점입니다`
+  } else {
     message.startMessage = '연도별 건강점수가 아직 없습니다'
     message.endMessage = ''
   }
 
-  if (year.length === 1) {
-    message.startMessage = `${year[0]}년 건강점수는`
-    message.endMessage = `${value[0]}점입니다`
-  }
-
-  value.forEach((score, i) => {
-    const obj: ScoreType = {}
-
-    obj.x = year[i]
-    obj.value = Number(score)
-    scoreAndYears.push(obj)
-  })
-
   return {
     message,
-    diff: scoreComparedToPreviousYear,
+    status: getStatusMessage(scoreComparedToPreviousYear),
     yearsInfo: scoreAndYears,
   }
 }
@@ -99,7 +95,7 @@ export const fetchAverageInfo = () => {
   return {
     percent,
     message,
-    diff: result,
+    status: getStatusMessage(result),
     score: [
       { x: '나', value: Number(USER_SCORE) },
       { x: '30대 남성', value: Number(data.wxcResultMap.hscore_peer) },
@@ -117,7 +113,7 @@ export const healthForecast = () => {
   const message = getScoreDiffAfterTenYearsMessage(compareToFuture)
 
   return {
-    diff: compareToFuture,
+    status: getStatusMessage(compareToFuture),
     message,
     score: [
       { x: '나', value: Number(USER_SCORE) },
@@ -142,7 +138,7 @@ export const expenseForecast = () => {
   const expense = Number(currentExpenseString).toLocaleString()
 
   return {
-    diff: expenseComparedToFuture,
+    status: getStatusMessage(expenseComparedToFuture),
     message,
     score: [
       { x: '나', value: expense },

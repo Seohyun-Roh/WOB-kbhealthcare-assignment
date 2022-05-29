@@ -26,10 +26,29 @@
     margin-top: 20px;
     font-size: 18px;
     line-height: 22px;
+    white-space: pre-wrap;
 
     mark {
-      color: colors.$MARK_COLOR;
-      background: linear-gradient(colors.$WHITE 50%, colors.$MAIN_COLOR 50%);
+      &.percent {
+        font-weight: bold;
+        background: linear-gradient(colors.$WHITE 50%, colors.$MAIN_COLOR 50%);
+      }
+
+      &.increased {
+        color: colors.$MARK_COLOR_INCREASED;
+      }
+
+      &.decreased {
+        color: colors.$MARK_COLOR_DECREASED;
+      }
+
+      &.same {
+        color: colors.$MARK_COLOR_SAME;
+      }
     }
+  }
+
+  .textContainer {
+    @include flexbox.flexbox(between, center);
   }
 }
