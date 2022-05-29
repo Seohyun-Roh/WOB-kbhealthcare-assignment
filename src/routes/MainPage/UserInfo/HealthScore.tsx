@@ -26,10 +26,9 @@ const HealthScore = ({ healthScore }: { healthScore: number }) => {
           colorScale={['#eeeeee', '#ffd300']}
         />
       </div>
-
       <div className={styles.scoreBox}>
-        <h1 className={styles.score}>{healthScore}</h1>
-        <p className={styles.scoreName}>점</p>
+        <h3 className={styles.score}>{healthScore}</h3>
+        <span>점</span>
       </div>
       <p className={styles.date}>2021.08.20</p>
       <button type='button'>

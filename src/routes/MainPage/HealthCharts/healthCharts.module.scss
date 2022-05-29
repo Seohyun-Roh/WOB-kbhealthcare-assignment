@@ -3,12 +3,12 @@
 
 .container {
   position: relative;
-  height: 100%;
   margin-top: 30px;
 
   h2 {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 500;
+    line-height: 26px;
   }
 
   .detail {
@@ -16,23 +16,21 @@
     top: 0;
     right: 0;
     padding: 10px 15px;
-    font-size: 14px;
+    font-size: 13px;
     color: colors.$SUB_TEXT_COLOR;
     border: 1px solid colors.$BORDER_COLOR;
     border-radius: 20px;
   }
 
   .compare {
-    margin-top: 20px;
-    font-size: 18px;
-    line-height: 22px;
+    margin-top: 30px;
+    font-weight: 300;
+    line-height: 20px;
     white-space: pre-wrap;
 
     mark {
-      &.percent {
-        font-weight: bold;
-        background: linear-gradient(colors.$WHITE 50%, colors.$MAIN_COLOR 50%);
-      }
+      font-weight: 500;
+      background: linear-gradient(colors.$WHITE 50%, colors.$MAIN_COLOR 50%);
 
       &.increased {
         color: colors.$MARK_COLOR_INCREASED;
@@ -50,5 +48,19 @@
 
   .textContainer {
     @include flexbox.flexbox(between, center);
+    margin-top: 30px;
+
+    .compare {
+      margin-top: 0;
+    }
+
+    mark {
+      font-weight: 500;
+      color: colors.$MAIN_TEXT_COLOR;
+
+      &.percent {
+        background: linear-gradient(colors.$WHITE 50%, colors.$MAIN_COLOR 50%);
+      }
+    }
   }
 }
