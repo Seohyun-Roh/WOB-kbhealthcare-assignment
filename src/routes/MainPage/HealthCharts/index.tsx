@@ -22,7 +22,9 @@ const HealthCharts = () => {
         <h2>
           나의 건강점수 <br /> 분석결과
         </h2>
-        <p className={styles.detail}>검진결과 자세히</p>
+        <button type='button' className={styles.detail}>
+          검진결과 자세히
+        </button>
         <p className={styles.compare}>
           총점이
           <br />

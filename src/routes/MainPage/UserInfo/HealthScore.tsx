@@ -32,10 +32,10 @@ const HealthScore = () => {
         <p className={styles.scoreName}>점</p>
       </div>
       <p className={styles.date}>2021.08.20</p>
-      <p>
+      <button type='button'>
         건강검진결과 가져오기
         <HealthInfoArrow className={styles.healthInfoArrowIcon} />
-      </p>
+      </button>
     </div>
   )
 }

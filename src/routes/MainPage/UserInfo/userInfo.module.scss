@@ -32,7 +32,7 @@
         height: 250px;
       }
 
-      p {
+      button {
         margin-bottom: 10px;
         font-size: 15px;
         color: colors.$SUB_TEXT_COLOR;
@@ -40,6 +40,7 @@
         .healthInfoArrowIcon {
           width: 15px;
           height: 15px;
+          padding-top: 5px;
         }
       }
 
