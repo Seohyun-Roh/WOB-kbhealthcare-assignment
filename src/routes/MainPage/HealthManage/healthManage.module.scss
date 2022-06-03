@@ -1,5 +1,22 @@
+@use '/src/styles/mixins/flexbox';
+@use '/src/styles/constants/colors';
+
 .container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-top: 30px;
+  color: colors.$MAIN_TEXT_COLOR;
+
+  .title {
+    margin-bottom: 30px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .subText {
+    font-weight: 300;
+    line-height: 22px;
+
+    span {
+      font-weight: 500;
+    }
+  }
 }
