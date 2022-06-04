@@ -1,6 +1,7 @@
 # KB Healthcare Assignment
 ## 배포
 https://kb-healthcare-team6.netlify.app
+로그인: kimhealth
 
 ## 참여 인원
 
