@@ -1,4 +1,6 @@
 # KB Healthcare Assignment
+## 배포
+https://kb-healthcare-team6.netlify.app
 
 ## 참여 인원
 
